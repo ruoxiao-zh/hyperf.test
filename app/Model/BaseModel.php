@@ -47,4 +47,13 @@ class BaseModel extends Model implements CacheableInterface
     {
         return 3600;
     }
+
+//    protected function fireModelEvent(string $event): ?object
+//    {
+//        parent::fireModelEvent($event);
+//
+////        if (in_array($event, ['created', 'updated', 'saved', 'deleted'], true)) {
+////            $this->
+////        }
+//    }
 }

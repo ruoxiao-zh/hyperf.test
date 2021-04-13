@@ -15,6 +15,8 @@ use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Services\UserAddress\UserAddressService;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
+use Hyperf\HttpServer\Contract\ResponseInterface as ResponseContract;
 
 /**
  * @Controller(prefix="api")
@@ -99,12 +101,19 @@ class UserAddressesController extends AbstractController
         return new UserAddressResource($userAddress);
     }
 
-    public function destroy(UserAddress $userAddress)
+    /**
+     * @RequestMapping(path="user_addresses/{id:\d+}", methods={"delete"})
+     *
+     * @param RequestInterface $request
+     * @param ResponseContract $response
+     * @return mixed
+     */
+    public function destroy(RequestInterface $request, ResponseContract $response): Psr7ResponseInterface
     {
-        $this->userAddressService->checkAuthorize($userAddress);
+        // $this->userAddressService->checkAuthorize($userAddress);
 
-        $userAddress->delete();
+        UserAddress::query(true)->where('id', $request->route('id'))->delete();
 
-        return response(null, HttpCodeEnum::HTTP_CODE_204);
+        return response($response, null, HttpCodeEnum::HTTP_CODE_204);
     }
 }
