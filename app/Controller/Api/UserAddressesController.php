@@ -3,13 +3,14 @@ declare(strict_types = 1);
 
 namespace App\Controller\Api;
 
-use App\Constants\HttpCodeEnum;
 use App\Model\UserAddress;
-use App\Request\Api\UserAddressRequest;
-use App\Resource\UserAddressResource;
+use App\Constants\HttpCodeEnum;
 use Hyperf\Di\Annotation\Inject;
+use App\Resource\UserAddressResource;
 use App\Controller\AbstractController;
 use Hyperf\Resource\Json\JsonResource;
+use App\Request\Api\UserAddressRequest;
+use Psr\Http\Message\ResponseInterface;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use App\Services\UserAddress\UserAddressService;
@@ -32,15 +33,23 @@ class UserAddressesController extends AbstractController
      * @RequestMapping(path="user_addresses", methods={"get"})
      *
      * @param RequestInterface $request
+     * @return JsonResource
      */
     public function index(RequestInterface $request): JsonResource
     {
-        return UserAddressResource::collection(UserAddress::query()->sorted()->recent()->paginate());
+        return UserAddressResource::collection(UserAddress::query()->recent()->paginate());
     }
 
-    public function store(UserAddressRequest $request): object
+    /**
+     * @RequestMapping(path="user_addresses", methods={"post"})
+     *
+     * @param UserAddressRequest $request
+     * @return ResponseInterface
+     * @throws \Exception
+     */
+    public function store(UserAddressRequest $request): ResponseInterface
     {
-        $userAddress = $request->user()->addresses()->create($request->only([
+        $data = array_merge($request->only([
             'province',
             'city',
             'district',
@@ -48,16 +57,31 @@ class UserAddressesController extends AbstractController
             'zip',
             'contact_name',
             'contact_phone',
-        ]));
+        ]), ['user_id' => random_int(1, 999)]);
 
-        return (new UserAddressResource($userAddress))->toResponse()->setStatusCode(HttpCodeEnum::HTTP_CODE_201);
+        $userAddress = UserAddress::create($data);
+
+        return (new UserAddressResource($userAddress))->toResponse()->withStatus(HttpCodeEnum::HTTP_CODE_201);
     }
 
-    public function show(UserAddress $userAddress): JsonResource
+    /**
+     * @RequestMapping(path="user_addresses/{id:\d+}", methods={"get"})
+     *
+     * @param RequestInterface $request
+     * @return JsonResource
+     */
+    public function show(RequestInterface $request): JsonResource
     {
-        return new UserAddressResource($userAddress);
+        return new UserAddressResource(UserAddress::find($request->route('id')));
     }
 
+    /**
+     *@RequestMapping(path="user_addresses/{id:\d+}", methods={"put"})
+     *
+     * @param UserAddressRequest $request
+     * @param UserAddress $userAddress
+     * @return JsonResource
+     */
     public function update(UserAddressRequest $request, UserAddress $userAddress): JsonResource
     {
         $this->userAddressService->checkAuthorize($userAddress);

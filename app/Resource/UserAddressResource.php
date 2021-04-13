@@ -4,7 +4,7 @@ namespace App\Resource;
 
 use Hyperf\Resource\Json\JsonResource;
 
-class UserAddressResource extends JsonResource
+class UserAddressResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
