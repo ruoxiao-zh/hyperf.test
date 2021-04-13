@@ -72,7 +72,7 @@ class UserAddressesController extends AbstractController
      */
     public function show(RequestInterface $request): JsonResource
     {
-        return new UserAddressResource(UserAddress::find($request->route('id')));
+        return new UserAddressResource(UserAddress::findFromCache($request->route('id')));
     }
 
     /**

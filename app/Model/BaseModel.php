@@ -4,8 +4,14 @@ declare (strict_types = 1);
 
 namespace App\Model;
 
-class BaseModel extends Model
+use Hyperf\Database\Model\Model;
+use Hyperf\ModelCache\Cacheable;
+use Hyperf\ModelCache\CacheableInterface;
+
+class BaseModel extends Model implements CacheableInterface
 {
+    use Cacheable;
+
     protected $hidden = ['deleted_at'];
 
     protected $appends = [
@@ -31,5 +37,14 @@ class BaseModel extends Model
     public function scopeSorted($query)
     {
         return $query->orderBy('sort', 'desc');
+    }
+
+    /**
+     * 缓存时间
+     * @return int|null
+     */
+    public function getCacheTTL(): ?int
+    {
+        return 3600;
     }
 }
