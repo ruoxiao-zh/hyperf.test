@@ -2,8 +2,6 @@
 
 namespace App\Resource;
 
-use Hyperf\Resource\Json\JsonResource;
-
 class ProductResource extends BaseResource
 {
     /**

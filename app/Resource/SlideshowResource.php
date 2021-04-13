@@ -2,9 +2,7 @@
 
 namespace App\Resource;
 
-use Hyperf\Resource\Json\JsonResource;
-
-class SlideshowResource extends JsonResource
+class SlideshowResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
