@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 /**
  * This file is part of Hyperf.
  *
@@ -10,14 +10,14 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 return [
-    'enable' => false,
-    'packer' => Hyperf\Utils\Packer\JsonPacker::class,
+    'enable'                 => false,
+    'packer'                 => Hyperf\Utils\Packer\JsonPacker::class,
     'use_standalone_process' => true,
-    'namespaces' => [
+    'namespaces'             => [
         '/application',
     ],
-    'mapping' => [
+    'mapping'                => [
         '/application/test' => 'test',
     ],
-    'interval' => 5,
+    'interval'               => 5,
 ];

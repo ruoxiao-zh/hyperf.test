@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 /**
  * This file is part of Hyperf.
  *
@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 return [
-    'locale' => 'zh_CN',
+    'locale'          => 'zh_CN',
     'fallback_locale' => 'en',
-    'path' => BASE_PATH . '/storage/languages',
+    'path'            => BASE_PATH . '/storage/languages',
 ];
