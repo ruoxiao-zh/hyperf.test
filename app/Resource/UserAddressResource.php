@@ -18,18 +18,20 @@ class UserAddressResource extends BaseResource
         }
 
         return [
-            'id'            => $this->id,
-            'province'      => $this->province,
-            'city'          => $this->city,
-            'district'      => $this->district,
-            'address'       => $this->address,
-            'full_address'  => $this->fullAddress,
-            'zip'           => $this->zip,
-            'contact_name'  => $this->contact_name,
-            'contact_phone' => $this->contact_phone,
-            'last_used_at'  => $this->last_used_at,
-            'created_at'    => $this->created_at->toDateTimeString(),
-            'updated_at'    => $this->updated_at->toDateTimeString(),
+            'id'                         => $this->id,
+            'province'                   => $this->province,
+            'city'                       => $this->city,
+            'district'                   => $this->district,
+            'address'                    => $this->address,
+            'full_address'               => $this->fullAddress,
+            'zip'                        => $this->zip,
+            'contact_name'               => $this->contact_name,
+            'contact_phone'              => $this->contact_phone,
+            'last_used_at'               => $this->last_used_at,
+            'created_at'                 => $this->created_at->toDateTimeString(),
+            'updated_at'                 => $this->updated_at->toDateTimeString(),
+            'created_at_diff_for_humans' => $this->created_at->diffForHumans(),
+            'updated_at_diff_for_humans' => $this->updated_at->diffForHumans(),
         ];
     }
 }

@@ -25,3 +25,17 @@ if ( !function_exists('response')) {
         return $response->json($content)->withStatus($statusCode);
     }
 }
+
+if ( !function_exists('abort')) {
+    /**
+     * @param int $code
+     * @param string $message
+     * @param array $headers
+     * @param string $errorCode
+     * @throws HttpException
+     */
+    function abort(int $code, string $message = '', array $headers = [], string $errorCode = '')
+    {
+        throw new HttpException($code, $message, null, $headers, $errorCode);
+    }
+}

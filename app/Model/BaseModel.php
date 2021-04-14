@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 namespace App\Model;
 
+use Carbon\Carbon;
 use Hyperf\Database\Model\Model;
 use Hyperf\ModelCache\Cacheable;
 use Hyperf\ModelCache\CacheableInterface;
@@ -45,7 +46,17 @@ class BaseModel extends Model implements CacheableInterface
      */
     public function getCacheTTL(): ?int
     {
-        return 3600;
+        return 3600 * 12;
+    }
+
+    public function boot(): void
+    {
+        Carbon::setLocale('zh');
+    }
+
+    public static function getModelName(): string
+    {
+        return strtolower(get_class(new static()));
     }
 
 //    protected function fireModelEvent(string $event): ?object

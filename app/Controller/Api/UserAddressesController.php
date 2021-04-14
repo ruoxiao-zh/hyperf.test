@@ -5,8 +5,10 @@ namespace App\Controller\Api;
 
 use App\Model\UserAddress;
 use App\Constants\HttpCodeEnum;
+use App\Services\Cache\CacheService;
 use Hyperf\Di\Annotation\Inject;
 use App\Resource\UserAddressResource;
+use Hyperf\Cache\Annotation\Cacheable;
 use App\Controller\AbstractController;
 use Hyperf\Resource\Json\JsonResource;
 use App\Request\Api\UserAddressRequest;
@@ -39,7 +41,7 @@ class UserAddressesController extends AbstractController
      */
     public function index(RequestInterface $request): JsonResource
     {
-        return UserAddressResource::collection(UserAddress::query()->recent()->paginate());
+        return UserAddressResource::collection($this->userAddressService->getAll($request));
     }
 
     /**
